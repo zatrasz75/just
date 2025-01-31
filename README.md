@@ -14,13 +14,23 @@ go get github.com/zatrasz75/just
 package main
 
 import (
-	"github.com/zatrasz75/just/logger"
+  "fmt"
+  "github.com/zatrasz75/just/logger"
 )
+  
+const logFilePath = "./var/log/main.log"
 
 func main() {
-	l := logger.NewLogger()
-	l.Info("This is an info message", "key1", "value1")
-	l.Error("This is an error message", fmt.Errorf("something went wrong"))
+   // Если logFilePath оставить "" то записи логов в файл не будет, только в консоль
+	l, err := logger.NewLogger(logFilePath)
+		if err != nil {
+		fmt.Println("Ошибка при создании файла логгера:", err)
+		return
+	}
+	defer l.Close()
+	
+	l.Info("Это информационное сообщение", "key1", "value1")
+	l.Error("Это информационное сообщение", fmt.Errorf("что-то пошло не так"))
 }
 ```
 
