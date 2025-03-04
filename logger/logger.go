@@ -194,7 +194,7 @@ func (l *MyLogger) Debug(message string, args ...interface{}) {
 func (l *MyLogger) Fatal(message string, err error) {
 	_, file, line, _ := runtime.Caller(1)
 	if l.consoleLogger != nil {
-		l.logWithCallerInfo(file, line, "FATAL", colorOrange, "%s: %v", message, err)
+		l.logWithCallerInfo(file, line, "FATAL", colorOrange, message, err)
 		os.Exit(1) // Завершаем приложение с кодом ошибки
 	} else {
 		log.Print("No logger available.")
